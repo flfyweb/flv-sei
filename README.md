@@ -1,15 +1,9 @@
 
-flv.js  [![npm](https://img.shields.io/npm/v/flv.js.svg?style=flat)](https://www.npmjs.com/package/flv.js)
+flv-sei
 ======
-An HTML5 Flash Video (FLV) Player written in pure JavaScript without Flash. LONG LIVE FLV!
 
-This project relies on [Media Source Extensions][] to work.
+Built on Bilibili [flv.js](https://github.com/bilibili/flv.js) v1.6.2, this version retains all its native playback capabilities while extending support for real-time monitoring and callbacks of SEI data.
 
-**For FLV live stream playback, please consider [mpegts.js][] which is under active development.**
-
-**This project will become rarely maintained.**
-
-[mpegts.js]: https://github.com/xqq/mpegts.js
 ## Overview
 flv.js works by transmuxing FLV file stream into ISO BMFF (Fragmented MP4) segments, followed by feeding mp4 segments into an HTML5 `<video>` element through [Media Source Extensions][] API.
 
@@ -28,7 +22,7 @@ flv.js works by transmuxing FLV file stream into ISO BMFF (Fragmented MP4) segme
 
 ## Installation
 ```bash
-npm install --save flv.js
+npm install --save flv-sei
 ```
 
 ## Build

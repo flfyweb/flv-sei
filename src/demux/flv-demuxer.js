@@ -54,6 +54,7 @@ class FLVDemuxer {
         this._onMediaInfo = null;
         this._onMetaDataArrived = null;
         this._onScriptDataArrived = null;
+        this._onSeiData = null;
         this._onTrackMetadata = null;
         this._onDataAvailable = null;
 
@@ -126,6 +127,7 @@ class FLVDemuxer {
         this._onMediaInfo = null;
         this._onMetaDataArrived = null;
         this._onScriptDataArrived = null;
+        this._onSeiData = null;
         this._onTrackMetadata = null;
         this._onDataAvailable = null;
     }
@@ -193,6 +195,14 @@ class FLVDemuxer {
 
     set onScriptDataArrived(callback) {
         this._onScriptDataArrived = callback;
+    }
+
+    get onSeiData() {
+        return this._onSeiData;
+    }
+
+    set onSeiData(callback) {
+        this._onSeiData = callback;
     }
 
     // prototype: function(type: number, info: string): void
@@ -1072,6 +1082,24 @@ class FLVDemuxer {
 
             let data = new Uint8Array(arrayBuffer, dataOffset + offset, lengthSize + naluSize);
             let unit = {type: unitType, data: data};
+
+            if (unit.type === 6) {
+                let seiTypeEndIndex = 5;
+                let seiType = data[seiTypeEndIndex];
+                while (data[seiTypeEndIndex] === 255) {
+                    seiTypeEndIndex++;
+                    seiType += data[seiTypeEndIndex];
+                }
+                let seiSizeEndIndex = seiTypeEndIndex + 1;
+                while (data[seiSizeEndIndex] === 255) {
+                    seiSizeEndIndex++;
+                }
+                const unitArray = data.subarray(seiSizeEndIndex + 1, -1);
+                if (this._onSeiData) {
+                    this._onSeiData({ sei: unitArray, seiType, tagPosition });
+                }
+            }
+
             units.push(unit);
             length += data.byteLength;
 
