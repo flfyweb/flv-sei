@@ -6,7 +6,7 @@
   "types": "./d.ts/flv.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Bilibili/flv.js"
+    "url": "https://github.com/bryenx/flv-sei"
   },
   "keywords": [
     "html5",
@@ -38,6 +38,9 @@
     "webpack": "^5.45.1",
     "webpack-cli": "^4.7.2"
   },
-  "author": "zheng qian <xqq@xqq.im>",
-  "license": "Apache-2.0"
+  "author": "bryenx",
+  "license": "Apache-2.0",
+  "volta": {
+    "node": "14.21.3"
+  }
 }

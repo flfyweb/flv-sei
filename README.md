@@ -57,6 +57,25 @@ See [cors.md](docs/cors.md) for more details.
 </script>
 ```
 
+## SEI Data Callback
+```js
+flvPlayer.on(flvjs.Events.SEI_DATA, function (data) {
+    console.log('SEI type:', data.seiType);       // SEI message type
+    console.log('SEI payload:', data.sei);         // Uint8Array
+    console.log('Tag position:', data.tagPosition);
+
+    // decode as text if the SEI carries a string
+    var text = new TextDecoder().decode(data.sei);
+    console.log('SEI text:', text);
+});
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `sei` | `Uint8Array` | SEI NALU payload data |
+| `seiType` | `number` | SEI message type (e.g. 5 = user_data_unregistered) |
+| `tagPosition` | `number` | Byte position of the FLV tag containing this SEI |
+
 ## Limitations
 - MP3 audio codec is currently not working on IE11 / Edge
 - HTTP FLV live stream is not currently working on all browsers, see [livestream.md](docs/livestream.md)
